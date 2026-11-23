@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<style>
+.songs > summary { list-style: none; cursor: pointer; margin-bottom: 1.25rem; }
+.songs > summary::-webkit-details-marker { display: none; }
+.songs .when-open { display: none; }
+.songs[open] .when-open { display: inline; }
+.songs[open] .when-closed { display: none; }
+.songs[open] .tracks { animation: list-in 0.5s ease both; }
+.songs[open] .track { animation: track-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.songs[open] .track:nth-child(1) { animation-delay: 0.05s; }
+.songs[open] .track:nth-child(2) { animation-delay: 0.12s; }
+.songs[open] .track:nth-child(3) { animation-delay: 0.19s; }
+.songs[open] .track:nth-child(4) { animation-delay: 0.26s; }
+.songs[open] .track:nth-child(5) { animation-delay: 0.33s; }
+.songs[open] .track:nth-child(6) { animation-delay: 0.40s; }
+.songs[open] .track:nth-child(7) { animation-delay: 0.47s; }
+.songs[open] .track:nth-child(8) { animation-delay: 0.54s; }
+.songs[open] .track:nth-child(9) { animation-delay: 0.61s; }
+.songs[open] .track:nth-child(10) { animation-delay: 0.68s; }
+@keyframes list-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes track-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+.songs.closing[open] .tracks { animation: list-out 0.4s ease both; }
+.songs.closing[open] .track { animation: track-out 0.35s ease both; }
+.songs.closing[open] .track:nth-child(n) { animation-delay: 0s; }
+@keyframes list-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes track-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-14px); } }
+</style>
+<title>Carta de amor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400;1,6..96,500&family=Figtree:wght@400;500;600&family=Pinyon+Script&display=swap">
+<style>
+/* Concepto: una carta de amor de noche. Portada con corazón y pétalos que flotan, frases en tarjetas,
+   un frasco de frases al azar, la playlist como lista de canciones, una carta larga y promesas. */
+:root {
+  --bg: #1a0f1e;
+  --bg-glow: #3a1730;
+  --surface: rgba(255, 233, 236, 0.05);
+  --surface-strong: rgba(255, 233, 236, 0.09);
+  --fg: #f6e9ea;
+  --muted: #bda7b6;
+  --rose: #eab5ba;
+  --gold: #e2b295;
+  --wine: #8e2f55;
+  --line: rgba(226, 178, 149, 0.32);
+  --line-soft: rgba(246, 233, 234, 0.12);
+  --font-display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --font-script: "Pinyon Script", "Snell Roundhand", cursive;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, ul, ol, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; }
+
+#petals { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+main { position: relative; z-index: 1; }
+
+.wrap {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.section { padding-block: clamp(3rem, 8vw, 5.5rem); }
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- Portada ---------- */
+.hero {
+  margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+  padding-top: calc(env(safe-area-inset-top, 0px) + 3.5rem);
+  padding-bottom: 3.5rem;
+  background:
+    radial-gradient(60rem 28rem at 50% 0%, var(--bg-glow), transparent 70%),
+    radial-gradient(30rem 20rem at 90% 80%, rgba(142, 47, 85, 0.28), transparent 70%);
+  text-align: center;
+}
+.crest { width: clamp(84px, 22vw, 124px); height: auto; color: var(--gold); display: block; margin: 0 auto 1.25rem; }
+.crest .beat { transform-origin: 60px 60px; animation: beat 2.8s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.1); } 24% { transform: scale(1); } 36% { transform: scale(1.07); } 48% { transform: scale(1); } }
+.eyebrow { font-family: var(--font-script); font-size: clamp(1.5rem, 5vw, 2rem); color: var(--gold); line-height: 1.2; }
+h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3.6rem, 15vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-top: 0.35rem;
+  text-wrap: balance;
+}
+h1 .script {
+  display: block;
+  font-family: var(--font-script);
+  font-style: normal;
+  letter-spacing: 0;
+  color: var(--rose);
+  font-size: 0.62em;
+  line-height: 1.1;
+  margin-top: 0.1em;
+  transform: rotate(-3deg);
+}
+.lede { max-width: 34rem; margin: 1.75rem auto 0; color: var(--muted); font-size: clamp(1.05rem, 2.6vw, 1.25rem); text-wrap: balance; }
+.music { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.music .hint { font-size: 0.85rem; color: var(--muted); max-width: 22rem; }
+.scroll-hint { margin-top: 2rem; font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+
+.orn { display: block; width: min(260px, 70%); height: 22px; margin: 0 auto; color: var(--gold); }
+
+/* ---------- Encabezados de sección ---------- */
+.head { margin-bottom: clamp(1.75rem, 5vw, 2.75rem); max-width: 36rem; }
+.kicker { font-family: var(--font-script); font-size: clamp(1.5rem, 4vw, 1.9rem); color: var(--gold); line-height: 1.1; }
+h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.head p { margin-top: 0.9rem; color: var(--muted); }
+
+/* ---------- Frases ---------- */
+.cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr)); }
+.card {
+  position: relative;
+  min-width: 0;
+  padding: 2.4rem 1.4rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.card::before {
+  content: "\201C";
+  position: absolute;
+  top: 0.35rem; left: 1.1rem;
+  font-size: 3.4rem; line-height: 1;
+  color: var(--gold);
+  opacity: 0.8;
+}
+.card.wide { background: var(--surface-strong); border-color: var(--line); }
+@media (min-width: 720px) {
+  .card.wide { grid-column: span 2; font-size: 1.65rem; }
+  .card:nth-child(4n+2) { transform: translateY(0.9rem); }
+}
+
+/* ---------- Frasco ---------- */
+.jar {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 6vw, 3rem) clamp(1.25rem, 5vw, 2.5rem);
+  text-align: center;
+  background:
+    radial-gradient(24rem 14rem at 50% 0%, rgba(142, 47, 85, 0.35), transparent 75%),
+    var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px 999px 28px 28px;
+  border-radius: clamp(80px, 22vw, 200px) clamp(80px, 22vw, 200px) 28px 28px;
+}
+.jar .kicker { margin-bottom: 0.4rem; }
+.whisper {
+  min-height: 8.5rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.45rem, 4.6vw, 2.1rem);
+  line-height: 1.3;
+  text-wrap: balance;
+  padding-block: 0.75rem;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--rose);
+  color: #2a1220;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.btn:hover { background: #f3c6ca; transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 1.1em; height: 1.1em; }
+.btn.ghost { background: transparent; color: var(--rose); border: 1px solid var(--line); }
+.btn.ghost:hover { background: var(--surface-strong); }
+
+/* ---------- Playlist ---------- */
+.playlist-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.vinyl { width: clamp(96px, 22vw, 150px); height: auto; flex: none; animation: spin 14s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.tracks { border-top: 1px solid var(--line-soft); }
+.track {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0.25rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.fav {
+  width: 2.75rem; height: 2.75rem;
+  display: grid; place-items: center;
+  background: transparent; border: 0; border-radius: 50%;
+  cursor: pointer; color: var(--muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.fav:hover { color: var(--rose); }
+.fav svg { width: 1.4rem; height: 1.4rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.fav[aria-pressed="true"] { color: var(--rose); }
+.fav[aria-pressed="true"] svg { fill: currentColor; stroke: currentColor; }
+.fav.pop { animation: pop 0.35s ease; }
+@keyframes pop { 50% { transform: scale(1.35); } }
+.song { min-width: 0; }
+.song .t { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; line-height: 1.25; overflow-wrap: anywhere; }
+.song .a { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-top: 0.1rem; }
+.song .n { color: var(--muted); font-size: 0.96rem; margin-top: 0.3rem; }
+.listen { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; color: var(--rose); text-decoration: none; padding: 0.5rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; }
+.listen:hover { background: var(--surface-strong); }
+@media (max-width: 520px) {
+  .track { grid-template-columns: auto minmax(0, 1fr); }
+  .listen { grid-column: 2; justify-self: start; }
+}
+.playlist-cta { margin-top: 1.75rem; }
+
+/* ---------- Carta ---------- */
+.letter {
+  position: relative;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 3.5rem) clamp(1.4rem, 6vw, 3.5rem);
+  background: linear-gradient(160deg, rgba(255, 233, 236, 0.09), rgba(255, 233, 236, 0.03));
+  border: 1px solid var(--line);
+}
+.letter::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--line-soft); pointer-events: none; }
+.letter .salute { font-family: var(--font-script); font-size: clamp(2.2rem, 7vw, 3.2rem); color: var(--rose); line-height: 1.1; margin-bottom: 1rem; }
+.letter p { font-size: clamp(1.05rem, 2.6vw, 1.2rem); line-height: 1.8; }
+.letter p + p { margin-top: 1.25rem; }
+.letter .sign { margin-top: 2rem; font-family: var(--font-script); font-size: 2.2rem; color: var(--gold); text-align: right; line-height: 1.2; }
+
+/* ---------- Promesas ---------- */
+.promises { display: grid; gap: 0; max-width: 44rem; }
+.promises li {
+  position: relative;
+  padding: 1rem 0 1rem 2.4rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 1.12rem;
+}
+.promises li::before {
+  content: "";
+  position: absolute; left: 0.2rem; top: 1.3rem;
+  width: 1.1rem; height: 1.1rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23eab5ba' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.promises strong { font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--rose); font-size: 1.15em; }
+
+/* ---------- Final ---------- */
+.finale { text-align: center; padding-bottom: calc(clamp(3rem, 8vw, 5.5rem) + 1rem); }
+.big-heart {
+  width: clamp(110px, 30vw, 160px); height: clamp(110px, 30vw, 160px);
+  display: grid; place-items: center;
+  margin: 0 auto 1.25rem;
+  background: radial-gradient(circle at 50% 40%, rgba(234, 181, 186, 0.22), transparent 70%);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--rose);
+  transition: transform 0.25s ease;
+}
+.big-heart:hover { transform: scale(1.06); }
+.big-heart:active { transform: scale(0.96); }
+.big-heart svg { width: 52%; height: 52%; fill: currentColor; }
+.finale .say { font-family: var(--font-display); font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.15; text-wrap: balance; min-height: 2.4em; display: flex; align-items: center; justify-content: center; }
+.finale .tiny { margin-top: 1.5rem; color: var(--muted); font-size: 0.9rem; letter-spacing: 0.08em; }
+
+/* ---------- Animaciones y detalles románticos ---------- */
+main > .section { position: relative; }
+main > .section + .section::before {
+  content: "";
+  position: absolute; top: 0; left: 50%;
+  width: min(260px, 70%); height: 22px;
+  transform: translate(-50%, -50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 22' fill='none'%3E%3Cpath d='M0 11h96M144 11h96' stroke='%23e2b295' stroke-opacity='.55' stroke-width='.8'/%3E%3Cpath transform='translate(110.4 1.5) scale(.75)' fill='%23e2b295' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.hero { position: relative; overflow: hidden; }
+.hero > .wrap { position: relative; }
+.stars, .stars::after { position: absolute; inset: 0; pointer-events: none; animation: twinkle 5s ease-in-out infinite; }
+.stars {
+  background-image:
+    radial-gradient(1.6px 1.6px at 8% 18%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 22% 62%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 36% 12%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 58% 30%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 71% 8%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 86% 44%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 93% 76%, var(--fg) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 47% 86%, var(--fg) 50%, transparent 52%);
+}
+.stars::after {
+  content: "";
+  animation-delay: 2.5s;
+  background-image:
+    radial-gradient(1.4px 1.4px at 14% 40%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 30% 82%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 44% 52%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 66% 70%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 79% 24%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 90% 12%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 4% 88%, var(--gold) 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 62% 94%, var(--gold) 50%, transparent 52%);
+}
+@keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+.rise { animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+@keyframes fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero .crest {
+  filter: drop-shadow(0 0 14px rgba(234, 181, 186, 0.35));
+  animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, glow 3s ease-in-out 1s infinite;
+}
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(234, 181, 186, 0.25)); }
+  50% { filter: drop-shadow(0 0 26px rgba(234, 181, 186, 0.6)); }
+}
+.hero h1 .script {
+  background-image: linear-gradient(100deg, var(--rose) 0%, var(--gold) 35%, #fff4ee 50%, var(--gold) 65%, var(--rose) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: write 2.4s ease-out 0.9s both, shimmer 7s linear 3.4s infinite;
+}
+@keyframes write { from { clip-path: inset(-10% 100% -10% 0); } to { clip-path: inset(-10% -5% -10% 0); } }
+@keyframes shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+.scroll-hint::after {
+  content: "";
+  display: block; width: 1px; height: 30px; margin: 0.7rem auto 0;
+  background: linear-gradient(var(--gold), transparent);
+  transform-origin: top;
+  animation: drip 2.2s ease-in-out infinite;
+}
+@keyframes drip { 0% { transform: scaleY(0); opacity: 0; } 40% { opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+
+.card { transition: border-color 0.3s ease, background 0.3s ease, translate 0.3s ease; }
+.card:hover { border-color: var(--gold); background: var(--surface-strong); translate: 0 -4px; }
+
+.whisper .w { display: inline-block; animation: word-in 0.6s ease both; }
+@keyframes word-in { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+
+.together { text-align: center; padding-block: clamp(2.5rem, 7vw, 4rem); }
+.together h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+.counter { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1.5rem; }
+.unit { min-width: 5.2rem; padding: 0.9rem 0.6rem; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; }
+.unit .num { display: block; font-family: var(--font-display); font-style: italic; font-size: clamp(1.9rem, 6vw, 2.6rem); line-height: 1; font-variant-numeric: tabular-nums; color: var(--rose); }
+.unit .lab { display: block; margin-top: 0.4rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+.envelopes { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); align-items: start; }
+.envelope { min-width: 0; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; transition: background 0.3s ease, border-color 0.3s ease; }
+.envelope[open] { background: var(--surface-strong); border-color: var(--line); }
+.envelope summary { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.2rem; cursor: pointer; list-style: none; }
+.envelope summary::-webkit-details-marker { display: none; }
+.seal, .wax {
+  flex: none; display: grid; place-items: center; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #b0436e, var(--wine) 62%, #5e1c38);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.45);
+}
+.seal { width: 2.9rem; height: 2.9rem; transition: transform 0.4s ease; }
+.seal svg, .wax svg { width: 1.25rem; height: 1.25rem; fill: var(--rose); }
+.envelope summary:hover .seal { transform: scale(1.08) rotate(-6deg); }
+.envelope[open] .seal { transform: rotate(12deg); }
+.envelope .cue { display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.envelope .when { display: block; font-family: var(--font-display); font-style: italic; font-size: 1.4rem; line-height: 1.2; }
+.envelope .note { padding: 0 1.2rem 1.4rem; font-size: 1.02rem; line-height: 1.75; transform-origin: top; }
+.envelope[open] .note { animation: unfold 0.6s ease both; }
+@keyframes unfold { from { opacity: 0; transform: scaleY(0.85) translateY(-6px); } to { opacity: 1; transform: none; } }
+
+.letter { margin-top: 2rem; padding-top: calc(clamp(2rem, 7vw, 3.5rem) + 1rem); }
+.wax { position: absolute; top: -1.6rem; left: 50%; width: 3.2rem; height: 3.2rem; transform: translateX(-50%); z-index: 1; }
+.wax svg { width: 1.4rem; height: 1.4rem; }
+
+@supports (animation-timeline: view()) {
+  .head, .card, .envelope, .jar, .track, .promises li, .letter {
+    animation: rise-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes rise-in { from { opacity: 0.2; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+
+.playbtn { font: inherit; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; color: var(--rose); background: transparent; padding: 0.55rem 1rem; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; cursor: pointer; min-width: 6.2rem; }
+.playbtn:hover { background: var(--surface-strong); }
+@media (max-width: 520px) { .playbtn { grid-column: 2; justify-self: start; } }
+.track { transition: background 0.2s ease; }
+.track.on { background: var(--surface); }
+.track.on .song .t { color: var(--rose); }
+.audios { display: none; }
+main { padding-bottom: 4.5rem; }
+.nowbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-top: 0.7rem;
+  padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: rgba(26, 15, 30, 0.94);
+  border-top: 1px solid var(--line);
+}
+.nowbar .np { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.nowbar .np-k { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.nowbar .np-t { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn.small { padding: 0.5rem 1rem; font-size: 0.9rem; }
+@media (prefers-reduced-motion: reduce) {
+  .rise, .hero .crest, .hero h1 .script, .stars, .stars::after, .scroll-hint::after, .whisper .w, .envelope[open] .note { animation: none; }
+  .hero h1 .script { clip-path: none; }
+  .head, .card, .envelope, .jar, .track, .promises li, .letter { animation: none; }
+  .card, .envelope, .seal { transition: none; }
+  html { scroll-behavior: auto; }
+  .crest .beat, .vinyl { animation: none; }
+  .fav.pop { animation: none; }
+  .btn, .big-heart, .fav { transition: none; }
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></symbol>
+</svg>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="wrap">
+      <svg class="crest" viewBox="0 0 120 120" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="60" cy="60" r="54" stroke-width="1"/>
+        <circle cx="60" cy="60" r="46" stroke-width="0.6" stroke-dasharray="1.5 4"/>
+        <g class="beat"><use href="#heart" x="36" y="36" width="48" height="48" fill="currentColor" stroke="none"/></g>
+        <path d="M60 2v8M60 110v8M2 60h8M110 60h8" stroke-width="1"/>
+      </svg>
+      <p class="eyebrow rise" style="--d: 0.5s">hecho con cariño, solo para vos</p>
+      <h1 class="rise" style="--d: 0.7s">Para vos<span class="script">mi amor</span></h1>
+      <p class="lede rise" style="--d: 1.2s">Armé este rinconcito con todo lo lindo que me pasa cuando pienso en vos. Quedate un rato, leé con calma y ponete cómoda.</p>
+      <div class="music rise" style="--d: 1.5s">
+        <button class="btn" id="music-btn" type="button"><svg aria-hidden="true"><use href="#heart" fill="currentColor"/></svg><span id="music-label">Poné música</span></button>
+        <span class="hint">Tocá y suena la música mientras seguís leyendo.</span>
+      </div>
+      <p class="scroll-hint rise" style="--d: 1.8s">Seguí bajando</p>
+    </div>
+  </header>
+
+  <section class="section together" id="juntos" aria-labelledby="t-juntos" hidden>
+    <div class="wrap">
+      <p class="kicker">cada segundo cuenta</p>
+      <h2 id="t-juntos">Juntos desde hace</h2>
+      <div class="counter">
+        <div class="unit" id="u-y"><span class="num" id="c-y">0</span><span class="lab">años</span></div>
+        <div class="unit"><span class="num" id="c-m">0</span><span class="lab">meses</span></div>
+        <div class="unit"><span class="num" id="c-d">0</span><span class="lab">días</span></div>
+        <div class="unit"><span class="num" id="c-h">0</span><span class="lab">horas</span></div>
+        <div class="unit"><span class="num" id="c-i">0</span><span class="lab">min</span></div>
+        <div class="unit"><span class="num" id="c-s">0</span><span class="lab">seg</span></div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="orn" viewBox="0 0 240 22" fill="none" stroke="currentColor" aria-hidden="true">
+    <path d="M0 11h96M144 11h96" stroke-width="0.8"/>
+    <use href="#heart" x="108" y="0" width="24" height="22" fill="currentColor" stroke="none"/>
+  </svg>
+
+  <section class="section" id="frases" aria-labelledby="t-frases">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">lo que siento</p>
+        <h2 id="t-frases">Cosas que quiero que sepas</h2>
+      </div>
+      <ul class="cards">
+        <li class="card wide">Sos mi lugar favorito, esté donde esté.</li>
+        <li class="card">Con vos hasta lo más simple se convierte en un plan perfecto.</li>
+        <li class="card">Tu risa es mi sonido preferido del mundo.</li>
+        <li class="card">Todos los días te elegiría de nuevo.</li>
+        <li class="card">Me gusta quién soy cuando estoy con vos.</li>
+        <li class="card wide">Si me preguntan qué es la calma, pienso en tu abrazo.</li>
+        <li class="card">Gracias por cuidarme, incluso cuando no me doy cuenta.</li>
+        <li class="card">Tu sonrisa me arregla el día entero.</li>
+        <li class="card">No hace falta que pase nada especial. Con estar con vos alcanza.</li>
+        <li class="card">Te quiero en las mañanas con sueño y en las noches de charla larga.</li>
+        <li class="card wide">Sos lo mejor que me pasó, y lo mejor que me sigue pasando.</li>
+        <li class="card">Quiero ser tu compañero en los días buenos y también en los difíciles.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="frasco" aria-labelledby="t-frasco">
+    <div class="wrap">
+      <div class="jar">
+        <p class="kicker">un frasquito de cariño</p>
+        <h2 id="t-frasco" style="font-size: clamp(1.7rem, 5vw, 2.4rem);">Abrí una frase</h2>
+        <p class="whisper" id="whisper" aria-live="polite">Hoy también pensé en vos más de lo que te imaginás.</p>
+        <button class="btn" id="next" type="button">
+          <svg aria-hidden="true"><use href="#heart" fill="currentColor"/></svg>
+          Otra frase
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="abrir" aria-labelledby="t-abrir">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">para cuando me extrañes</p>
+        <h2 id="t-abrir">Cartitas para abrir cuando…</h2>
+        <p>Tocá la que necesites. Cada una guarda un mensaje para ese momento.</p>
+      </div>
+      <div class="envelopes">
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">me extrañes</span></span></summary>
+          <p class="note">Cerrá los ojos un segundo. Estoy ahí con vos, igual que siempre. La distancia es solo un rato hasta el próximo abrazo, y yo ya estoy contando los minutos.</p>
+        </details>
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">tengas un mal día</span></span></summary>
+          <p class="note">Respirá hondo. Hoy fue pesado, pero sos más fuerte de lo que creés. Cuando termine el día quiero que me cuentes todo, y abrazarte hasta que se pase.</p>
+        </details>
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">dudes de vos</span></span></summary>
+          <p class="note">Sos inteligente, hermosa, graciosa y valiente. Lo vi con mis propios ojos. Si hoy no lográs verlo, confiá en mí, que te miro bien de cerca.</p>
+        </details>
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">no puedas dormir</span></span></summary>
+          <p class="note">Imaginate que te doy un abrazo largo y te acaricio el pelo hasta que se te cierren los ojos. Dormí tranquila, mañana te espera alguien que te quiere un montón.</p>
+        </details>
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">necesites sonreír</span></span></summary>
+          <p class="note">Acordate de esa vez que nos reímos hasta que nos dolió la panza. Y pensá que hay muchísimas más como esa esperándonos.</p>
+        </details>
+        <details class="envelope">
+          <summary><span class="seal"><svg aria-hidden="true"><use href="#heart"/></svg></span><span><span class="cue">Abrir cuando</span><span class="when">estés feliz</span></span></summary>
+          <p class="note">¡Qué alegría! Quiero que me cuentes todo y festejar con vos. Tu felicidad es la mía, y verte así es mi cosa favorita del mundo.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="playlist" aria-labelledby="t-playlist">
+    <div class="wrap">
+      <div class="playlist-top">
+        <div class="head" style="margin-bottom: 1.5rem;">
+          <p class="kicker">banda sonora</p>
+          <h2 id="t-playlist">Canciones que suenan a vos</h2>
+          <p>Un poco de todo. Tocá una para escucharla, y marcá con el corazón tus favoritas.</p>
+        </div>
+        <svg class="vinyl" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="58" fill="#12080f" stroke="#e2b295" stroke-width="1"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#e2b295" stroke-opacity="0.25"/>
+          <circle cx="60" cy="60" r="42" fill="none" stroke="#e2b295" stroke-opacity="0.2"/>
+          <circle cx="60" cy="60" r="34" fill="none" stroke="#e2b295" stroke-opacity="0.15"/>
+          <circle cx="60" cy="60" r="20" fill="#8e2f55"/>
+          <use href="#heart" x="50" y="50" width="20" height="20" fill="#f6e9ea"/>
+          <circle cx="60" cy="60" r="2" fill="#12080f"/>
+        </svg>
+      </div>
+      <details class="songs">
+      <summary class="btn"><span class="when-closed">Ver todas las canciones</span><span class="when-open">Ocultar canciones</span></summary>
+      <ol class="tracks" id="tracks"></ol> 
+      </details>
+      <div class="audios">
+<audio id="a0" preload="metadata" src="audio/deja-vu.mp3"></audio>
+<audio id="a1" preload="metadata" src="audio/drivers-license.mp3"></audio>
+<audio id="a2" preload="metadata" src="audio/love-is-embarrassing.mp3"></audio>
+<audio id="a3" preload="metadata" src="audio/ballad-of-a-homeschooled-girl.mp3"></audio>
+<audio id="a4" preload="metadata" src="audio/vampire.mp3"></audio>
+<audio id="a5" preload="metadata" src="audio/stupid-song.mp3"></audio>
+<audio id="a6" preload="metadata" src="audio/honeybee.mp3"></audio>
+</div>
+      <div class="nowbar" id="nowbar" hidden>
+        <div class="np"><span class="np-k">Sonando</span><span class="np-t" id="np-title"></span></div>
+        <button class="btn ghost small" id="np-toggle" type="button">Pausar</button>
+        <button class="btn ghost small" id="np-next" type="button">Siguiente</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="carta" aria-labelledby="t-carta">
+    <div class="wrap">
+      <article class="letter">
+        <span class="wax" aria-hidden="true"><svg><use href="#heart"/></svg></span>
+        <h2 id="t-carta" class="salute" style="font-style: normal; font-weight: 400; letter-spacing: 0;">Mi amor,</h2>
+        <p>Quería regalarte algo que se pareciera a lo que siento, y las palabras me salieron más lindas cuando las pensé para vos.</p>
+        <p>Gracias por la paciencia, por los abrazos, por las risas que no se planean y por quedarte cuando todo está patas para arriba. Conocerte me cambió la forma de ver los días.</p>
+        <p>Me encantan nuestras cosas chiquitas: los mensajes de buenos días, las salidas sin rumbo, las charlas que se alargan hasta que se hace tarde. Ahí vive lo que más valoro de nosotros.</p>
+        <p>Quiero averiguar lo que viene de tu mano, riéndonos de lo que salga mal y festejando todo lo que salga bien. Gracias por ser como sos. Te quiero hoy, mañana y todos los días que siguen.</p>
+        <p class="sign">Tuyo, siempre</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="promesas" aria-labelledby="t-promesas">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">y como te quiero tanto</p>
+        <h2 id="t-promesas">Mis promesas</h2>
+      </div>
+      <ul class="promises">
+        <li><strong>Prometo</strong> escucharte aunque ya me hayas contado la historia tres veces.</li>
+        <li><strong>Prometo</strong> abrazarte fuerte cada vez que lo necesites.</li>
+        <li><strong>Prometo</strong> hacerte reír siempre que pueda.</li>
+        <li><strong>Prometo</strong> festejar tus logros como si fueran míos.</li>
+        <li><strong>Prometo</strong> seguir sorprendiéndote con detalles chiquitos.</li>
+        <li><strong>Prometo</strong> cuidar lo que construimos juntos.</li>
+        <li><strong>Prometo</strong> elegirte todos los días.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="section finale">
+    <div class="wrap">
+      <button class="big-heart" id="big-heart" type="button" aria-label="Tocá el corazón">
+        <svg aria-hidden="true"><use href="#heart"/></svg>
+      </button>
+      <p class="say" id="say" aria-live="polite">Tocá el corazón</p>
+      <p class="tiny">Hecho con mucho amor, para vos.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ===== Configuración fácil de cambiar ===== */
+  var SINCE = ""; // Fecha en que empezaron, formato AAAA-MM-DD, por ejemplo "2024-03-15". Si queda vacía, no se muestra el contador.
+
+  var TRACKS = [
+    { t: "deja vu", a: "Olivia Rodrigo", n: "Cada recuerdo que construimos juntos es uno que quiero volver a vivir muchas veces." },
+    { t: "drivers license", a: "Olivia Rodrigo", n: "Todos los caminos que hago terminan llevándome a pensar en vos." },
+    { t: "love is embarrassing", a: "Olivia Rodrigo", n: "Me animé a quererte sin miedo, y fue lo más valiente y lo más lindo que hice." },
+    { t: "ballad of a homeschooled girl", a: "Olivia Rodrigo", n: "Con vos puedo ser torpe, distinto y auténtico, y aun así me mirás con cariño." },
+    { t: "vampire", a: "Olivia Rodrigo", n: "Gracias por ser lo opuesto: alguien que me llena de energía y me hace sentir cuidado." },
+    { t: "stupid song", a: "Olivia Rodrigo", n: "A veces el amor te hace hacer cosas un poco tontas, y con vos me encantan todas." },
+    { t: "honeybee", a: "Olivia Rodrigo", n: "Sos la dulzura de mis días, y con vos todo sabe un poquito mejor." }
+  ];
+
+  var PHRASES = [
+    "Hoy también pensé en vos más de lo que te imaginás.",
+    "Si pudiera guardar un momento, guardaría cualquiera en el que estás vos.",
+    "Sos mi persona favorita para contarle todo.",
+    "Ojalá hoy alguien te diga lo hermosa que sos. Por las dudas, te lo digo yo.",
+    "Tu mano en la mía encaja perfecto.",
+    "Nada me gusta más que verte feliz.",
+    "Sos el mejor capítulo de mi historia.",
+    "Gracias por existir y por elegirme.",
+    "Que hoy el mundo te trate tan lindo como vos me tratás a mí.",
+    "Me encanta cómo te brillan los ojos cuando algo te entusiasma.",
+    "Estoy orgulloso de todo lo que sos y de todo lo que vas logrando.",
+    "Te extraño hasta cuando estás al lado.",
+    "Cada día me enamoro un poquito más.",
+    "Sos mi casa.",
+    "Si hoy fue un día pesado, acordate de que te quiero un montón.",
+    "Me hacés querer ser mejor persona.",
+    "Un abrazo de los largos, de esos que arreglan todo. Va para vos.",
+    "Gracias por cada risa que compartimos.",
+    "Sos mi calma y mi alegría, todo junto.",
+    "Con vos, el mejor plan es cualquier plan."
+  ];
+
+  var FINALES = [
+    "Te quiero, hoy y siempre.",
+    "Sos mi todo.",
+    "Gracias por ser vos.",
+    "Te quiero mucho, mucho, mucho.",
+    "Mi lugar favorito sos vos.",
+    "Cada día, un poquito más."
+  ];
+
+  var HEART = "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z";
+
+  /* ===== Playlist y reproductor ===== */
+  var favKey = "pv-favs";
+  var favs = {};
+  try { favs = JSON.parse(localStorage.getItem(favKey) || "{}") || {}; } catch (e) { favs = {}; }
+  function saveFavs() { try { localStorage.setItem(favKey, JSON.stringify(favs)); } catch (e) {} }
+
+  var list = document.getElementById("tracks");
+  var audios = TRACKS.map(function (_, i) { return document.getElementById("a" + i); });
+  var rows = [], playBtns = [];
+  var cur = -1, playing = false;
+  var bar = document.getElementById("nowbar");
+  var npTitle = document.getElementById("np-title");
+  var npToggle = document.getElementById("np-toggle");
+  var npNext = document.getElementById("np-next");
+  var musicBtn = document.getElementById("music-btn");
+  var musicLabel = document.getElementById("music-label");
+
+  function setUI() {
+    rows.forEach(function (r, i) { r.classList.toggle("on", i === cur); });
+    playBtns.forEach(function (b, i) { b.textContent = (i === cur && playing) ? "Pausar" : "Escuchar"; });
+    musicLabel.textContent = playing ? "Pausar música" : (cur >= 0 ? "Seguir música" : "Poné música");
+    npToggle.textContent = playing ? "Pausar" : "Seguir";
+    if (cur >= 0) { bar.hidden = false; npTitle.textContent = TRACKS[cur].t + " · " + TRACKS[cur].a; }
+  }
+  function playTrack(i) {
+    if (cur >= 0 && cur !== i) { audios[cur].pause(); audios[cur].currentTime = 0; }
+    cur = i;
+    playing = true;
+    var p = audios[i].play();
+    if (p && p.catch) { p.catch(function () { playing = false; setUI(); }); }
+    setUI();
+  }
+  function pauseCur() { if (cur >= 0) { audios[cur].pause(); } playing = false; setUI(); }
+  function toggleTrack(i) { if (cur === i && playing) { pauseCur(); } else { playTrack(i); } }
+  function nextTrack() { playTrack((cur + 1) % TRACKS.length); }
+
+  audios.forEach(function (a, i) {
+    a.addEventListener("ended", function () { if (cur === i) { nextTrack(); } });
+    a.addEventListener("pause", function () { if (cur === i && !a.ended) { playing = false; setUI(); } });
+    a.addEventListener("play", function () { if (cur === i) { playing = true; setUI(); } });
+  });
+  musicBtn.addEventListener("click", function () { if (playing) { pauseCur(); } else { playTrack(cur >= 0 ? cur : 0); } });
+  npToggle.addEventListener("click", function () { if (playing) { pauseCur(); } else { playTrack(cur >= 0 ? cur : 0); } });
+  npNext.addEventListener("click", nextTrack);
+
+  TRACKS.forEach(function (tr, i) {
+    var li = document.createElement("li");
+    li.className = "track";
+
+    var fav = document.createElement("button");
+    fav.className = "fav";
+    fav.type = "button";
+    fav.setAttribute("aria-pressed", favs[i] ? "true" : "false");
+    fav.setAttribute("aria-label", "Marcar " + tr.t + " como favorita");
+    fav.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + HEART + '"/></svg>';
+    fav.addEventListener("click", function () {
+      var on = fav.getAttribute("aria-pressed") !== "true";
+      fav.setAttribute("aria-pressed", on ? "true" : "false");
+      favs[i] = on;
+      saveFavs();
+      if (on) {
+        fav.classList.remove("pop"); void fav.offsetWidth; fav.classList.add("pop");
+        var r = fav.getBoundingClientRect();
+        burst(r.left + r.width / 2, r.top + r.height / 2, 9);
+      }
+    });
+
+    var song = document.createElement("div");
+    song.className = "song";
+    var t = document.createElement("div"); t.className = "t"; t.textContent = tr.t;
+    var a = document.createElement("div"); a.className = "a"; a.textContent = tr.a;
+    var n = document.createElement("div"); n.className = "n"; n.textContent = tr.n;
+    song.appendChild(t); song.appendChild(a); song.appendChild(n);
+
+    var pb = document.createElement("button");
+    pb.className = "playbtn";
+    pb.type = "button";
+    pb.textContent = "Escuchar";
+    pb.addEventListener("click", function () { toggleTrack(i); });
+
+    li.appendChild(fav); li.appendChild(song); li.appendChild(pb);
+    list.appendChild(li);
+    rows.push(li); playBtns.push(pb);
+  });
+
+  /* ===== Frasco de frases ===== */
+  var whisper = document.getElementById("whisper");
+  var order = [], pos = 0;
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+  function nextPhrase() {
+    if (pos >= order.length) {
+      order = shuffle(PHRASES.slice());
+      pos = 0;
+      if (order[0] === whisper.textContent.trim()) { order.push(order.shift()); }
+    }
+    var txt = order[pos++];
+    if (reduce) { whisper.textContent = txt; return; }
+    whisper.textContent = "";
+    var holder = document.createElement("span");
+    txt.split(" ").forEach(function (w, k) {
+      var sp = document.createElement("span");
+      sp.className = "w";
+      sp.style.animationDelay = (k * 0.07) + "s";
+      sp.textContent = w;
+      holder.appendChild(sp);
+      holder.appendChild(document.createTextNode(" "));
+    });
+    whisper.appendChild(holder);
+  }
+  var nextBtn = document.getElementById("next");
+  nextBtn.addEventListener("click", function () {
+    nextPhrase();
+    var r = nextBtn.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 8);
+  });
+
+  /* ===== Corazón final ===== */
+  var big = document.getElementById("big-heart");
+  var say = document.getElementById("say");
+  var fi = 0;
+  big.addEventListener("click", function () {
+    say.textContent = FINALES[fi % FINALES.length];
+    fi++;
+    var r = big.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 30);
+  });
+
+  /* ===== Canvas: corazones que flotan y estallidos ===== */
+  var cv = document.getElementById("petals");
+  var ctx = cv.getContext && cv.getContext("2d");
+  var W = 0, H = 0;
+  var COLORS = ["#eab5ba", "#e2b295", "#c9748f", "#f3d6d3"];
+  var path = null;
+  try { path = new Path2D(HEART); } catch (e) { path = null; }
+  var ambient = [], bursts = [];
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function makeAmbient(initial) {
+    return {
+      x: rnd(0, W), y: initial ? rnd(0, H) : H + 30,
+      s: rnd(10, 26), vy: rnd(10, 26), sw: rnd(0.4, 1.1), ph: rnd(0, 6.28),
+      a: rnd(0.1, 0.3), c: COLORS[Math.floor(Math.random() * COLORS.length)],
+      r: rnd(-0.5, 0.5), vr: rnd(-0.25, 0.25)
+    };
+  }
+  function drawHeart(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.r);
+    var k = p.s / 24;
+    ctx.scale(k, k);
+    ctx.translate(-12, -12);
+    ctx.globalAlpha = Math.max(0, p.a);
+    ctx.fillStyle = p.c;
+    ctx.fill(path);
+    ctx.restore();
+  }
+  function burst(x, y, n) {
+    if (reduce || !ctx || !path) return;
+    for (var i = 0; i < n; i++) {
+      var ang = rnd(0, Math.PI * 2), sp = rnd(60, 240);
+      bursts.push({
+        x: x, y: y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 90,
+        s: rnd(10, 24), a: 0.9, life: rnd(0.9, 1.6), age: 0,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)], r: rnd(-0.6, 0.6), vr: rnd(-2, 2)
+      });
+    }
+    start();
+  }
+
+  var last = 0, running = false;
+  function frame(ts) {
+    if (!running) return;
+    var dt = Math.min((ts - last) / 1000 || 0.016, 0.05);
+    last = ts;
+    ctx.clearRect(0, 0, W, H);
+    var t = ts / 1000;
+    for (var i = 0; i < ambient.length; i++) {
+      var p = ambient[i];
+      p.y -= p.vy * dt;
+      p.x += Math.sin(t * p.sw + p.ph) * 12 * dt;
+      p.r += p.vr * dt;
+      if (p.y < -40) ambient[i] = makeAmbient(false);
+      drawHeart(p);
+    }
+    for (var j = bursts.length - 1; j >= 0; j--) {
+      var b = bursts[j];
+      b.age += dt;
+      if (b.age >= b.life) { bursts.splice(j, 1); continue; }
+      b.vy += 260 * dt;
+      b.x += b.vx * dt; b.y += b.vy * dt; b.r += b.vr * dt;
+      var q = { x: b.x, y: b.y, s: b.s, a: 0.9 * (1 - b.age / b.life), c: b.c, r: b.r };
+      drawHeart(q);
+    }
+    requestAnimationFrame(frame);
+  }
+  function start() {
+    if (running || !ctx || !path) return;
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+
+  if (ctx && path && !reduce) {
+    resize();
+    var count = W < 600 ? 12 : 20;
+    for (var i = 0; i < count; i++) ambient.push(makeAmbient(true));
+    window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { running = false; } else { start(); }
+    });
+    start();
+  } else if (cv) {
+    cv.hidden = true;
+  }
+
+  /* ===== Contador de tiempo juntos ===== */
+  (function () {
+    if (!SINCE) return;
+    var d = new Date(SINCE + "T00:00:00");
+    if (isNaN(d.getTime()) || d.getTime() > Date.now()) return;
+    document.getElementById("juntos").hidden = false;
+    function put(id, v) { document.getElementById(id).textContent = String(v); }
+    function tick() {
+      var n = new Date();
+      var y = n.getFullYear() - d.getFullYear();
+      var m = n.getMonth() - d.getMonth();
+      var dd = n.getDate() - d.getDate();
+      if (dd < 0) { m--; dd += new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
+      if (m < 0) { y--; m += 12; }
+      put("c-y", y); put("c-m", m); put("c-d", dd);
+      put("c-h", n.getHours()); put("c-i", n.getMinutes()); put("c-s", n.getSeconds());
+      document.getElementById("u-y").hidden = y <= 0;
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* ===== Cartitas: estallido de corazones al abrir ===== */
+  document.querySelectorAll("details.envelope").forEach(function (dt) {
+    dt.addEventListener("toggle", function () {
+      if (!dt.open) return;
+      var s = dt.querySelector(".seal").getBoundingClientRect();
+      burst(s.left + s.width / 2, s.top + s.height / 2, 12);
+    });
+  });
+
+  /* ===== Corazones donde toques ===== */
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("button, a, summary")) return;
+    burst(e.clientX, e.clientY, 7);
+  });
+
+  /* ===== Sorpresa al llegar al final ===== */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var r = big.getBoundingClientRect();
+        burst(r.left + r.width / 2, r.top + r.height / 2, 22);
+        io.disconnect();
+      });
+    }, { threshold: 0.9 });
+    io.observe(big);
+  }
+})();
+</script>
+
+</body>
+<script>
+(function () {
+  var det = document.querySelector("details.songs");
+  if (!det) return;
+  var sum = det.querySelector("summary");
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var closing = false;
+  sum.addEventListener("click", function (e) {
+    if (!det.open || reduce) return;
+    e.preventDefault();
+    if (closing) return;
+    closing = true;
+    det.classList.add("closing");
+    setTimeout(function () {
+      det.open = false;
+      det.classList.remove("closing");
+      closing = false;
+    }, 420);
+  });
+})();
+</script>
+</html>
